@@ -15,8 +15,10 @@ class Prestamos extends Migration
     {
         Schema::create('prestamos', function(Blueprint $table) {
             $table->id();
-            $table->integer('libro_id');
-            $table->integer('cliente_id');
+            $table->unsignedBigInteger('libro_id')->nullable();
+            $table->foreign('libro_id')->references('id')->on('libros')->onDelete('set null');
+            $table->unsignedBigInteger('cliente_id')->nullable();
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('set null');
             $table->timestamp('fecha_prestamo')->nullable();
             $table->integer('dias_prestamo')->unsigned()->nullable()->default(12);
             $table->string('estado');

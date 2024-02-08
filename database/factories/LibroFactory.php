@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Libro;
+use App\Models\Autor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LibroFactory extends Factory
@@ -23,7 +24,9 @@ class LibroFactory extends Factory
     {
         return [
             'titulo' => $this->faker->sentence(),
-            'autor_id' => $this->faker->numberBetween(1, 6),
+            // 'user_id' => $faker->unique()->numberBetween(1, App\User::count())
+            'autor_id' => $this->faker->numberBetween(1, Autor::count()),
+            // 'autor_id' => $this->faker->numberBetween(1, 6),
             'lote' => $this->faker->unique()->numberBetween(1, 10000),
             'description' => $this->faker->paragraph(),
         ];
