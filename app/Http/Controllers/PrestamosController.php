@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\Prestamos;
 use Illuminate\Http\Request;
 
@@ -40,5 +41,12 @@ class PrestamosController extends Controller
 
     public function preSemanaMes() {
         return Prestamos::where('fecha_prestamo', '>', '2023-01-01')->get();
+    }
+
+    public function cliLibrosVencidos() {
+        $consulta = Cliente::select('cliente.id', 'cliente.name', 'cliente.celular', 'cliente.email', 'prestamos.cliente_id', 'prestamos.libro.id', 'prestamos.estado')
+                            ->join('prestamos', 'prestamos.cliente_id', '=', 'clientes.id')
+                            ->where('prestamos.estado','En Prestamo')->get();
+        return $consulta;
     }
 }
